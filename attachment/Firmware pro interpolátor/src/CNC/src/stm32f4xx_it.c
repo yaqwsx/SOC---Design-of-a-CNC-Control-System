@@ -1,0 +1,382 @@
+/**
+*****************************************************************************
+**
+**  File        : stm32f4xx_it.c
+**
+**  Abstract    : Main Interrupt Service Routines.
+**                This file provides template for all exceptions handler and
+**                peripherals interrupt service routine.
+**
+**  Environment : Atollic TrueSTUDIO(R)
+**                STMicroelectronics STM32F4xx Standard Peripherals Library
+**
+**  Distribution: The file is distributed “as is,” without any warranty
+**                of any kind.
+**
+**  (c)Copyright Atollic AB.
+**  You may use this file as-is or modify it according to the needs of your
+**  project. Distribution of this file (unmodified or modified) is not
+**  permitted. Atollic AB permit registered Atollic TrueSTUDIO(R) users the
+**  rights to distribute the assembled, compiled & linked contents of this
+**  file as part of an application binary file, provided that it is built
+**  using the Atollic TrueSTUDIO(R) toolchain.
+**
+**
+*****************************************************************************
+*/
+
+/* Includes ------------------------------------------------------------------*/
+#include <string.h>
+#include "stm32f4xx_it.h"
+#include "usb_core.h"
+#include "usbd_core.h"
+#include "stm32f4_discovery.h"
+#include "USB/VDclass.h"
+#include "DelayComponent.h"
+#include "axis.h"
+#include "GPIOControl/PulseGenerator.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+
+extern USB_OTG_CORE_HANDLE           USB_OTG_dev;
+extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+extern uint32_t ADC_ConvertedValueX;
+extern uint32_t ADC_ConvertedValueX_1;
+extern uint8_t  Buffer[];
+
+//For debugging of position
+uint8_t debugPositionBuffer[256];
+uint32_t debugPositionTime = 0;
+uint8_t debugPositionCounter = 0;
+uint8_t debugPositionPointer = 0;
+
+#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
+extern uint32_t USBD_OTG_EP1IN_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+extern uint32_t USBD_OTG_EP1OUT_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+#endif
+
+
+/* Private functions ---------------------------------------------------------*/
+
+/******************************************************************************/
+/*            Cortex-M4 Processor Exceptions Handlers                         */
+/******************************************************************************/
+
+/**
+  * @brief   This function handles NMI exception.
+  * @param  None
+  * @retval None
+  */
+void NMI_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles Hard Fault exception.
+  * @param  None
+  * @retval None
+  */
+void HardFault_Handler(void)
+{
+  /* Go to infinite loop when Hard Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Memory Manage exception.
+  * @param  None
+  * @retval None
+  */
+void MemManage_Handler(void)
+{
+  /* Go to infinite loop when Memory Manage exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Bus Fault exception.
+  * @param  None
+  * @retval None
+  */
+void BusFault_Handler(void)
+{
+  /* Go to infinite loop when Bus Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Usage Fault exception.
+  * @param  None
+  * @retval None
+  */
+void UsageFault_Handler(void)
+{
+  /* Go to infinite loop when Usage Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles SVCall exception.
+  * @param  None
+  * @retval None
+  */
+void SVC_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles Debug Monitor exception.
+  * @param  None
+  * @retval None
+  */
+void DebugMon_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles PendSVC exception.
+  * @param  None
+  * @retval None
+  */
+void PendSV_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
+void SysTick_Handler(void)
+{
+	//Handle delays
+	uint8_t i = 0;
+	while(i != delayComponent.capacity)
+	{
+		if(DecreaseDelay(i))
+		{
+			if(delayComponent.buffer[i].callback)//Is there a callback?
+			{
+				(*delayComponent.buffer[i].callback)();//Call it
+				RemoveDelayOnPosition(i);
+				continue;
+			}
+		}
+		i++;
+	}
+
+	//Handler for debug position
+	//If the user button is pressed, send informations abou position
+	if(STM32F4_Discovery_PBGetState(BUTTON_USER) == Bit_SET && debugPositionCounter == 100)
+	{
+		*((uint32_t*)(debugPositionBuffer+2+12*debugPositionPointer)) = debugPositionTime;
+		memcpy((void*)(debugPositionBuffer + 6 + 12*debugPositionPointer), (void*)(&axesBuffer), sizeof(float)*2);
+		debugPositionCounter = 0;
+		debugPositionPointer++;
+		if(debugPositionPointer == 21)
+		{
+			debugPositionBuffer[0] = 1;
+			debugPositionBuffer[1] = DEBUG_POSITION_INFO;//Error message type
+			SendData(debugPositionBuffer, sizeof(debugPositionBuffer));
+			debugPositionPointer = 0;
+		}
+	}
+	debugPositionTime++;
+	debugPositionCounter++;
+}
+
+/**
+  * @brief  This function handles OTG_FS_WKUP_IRQ Handler.
+  * @param  None
+  * @retval None
+  */
+#ifdef USE_USB_OTG_FS
+void OTG_FS_WKUP_IRQHandler(void)
+{
+  if(USB_OTG_dev.cfg.low_power)
+  {
+    *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ;
+    SystemInit();
+    USB_OTG_UngateClock(&USB_OTG_dev);
+  }
+  EXTI_ClearITPendingBit(EXTI_Line18);
+}
+#endif
+
+/**
+  * @brief  This function handles OTG_HS_WKUP_IRQ Handler.
+  * @param  None
+  * @retval None
+  */
+#ifdef USE_USB_OTG_HS
+void OTG_HS_WKUP_IRQHandler(void)
+{
+  if(USB_OTG_dev.cfg.low_power)
+  {
+    *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ;
+    SystemInit();
+    USB_OTG_UngateClock(&USB_OTG_dev);
+  }
+  EXTI_ClearITPendingBit(EXTI_Line20);
+}
+#endif
+
+/**
+  * @brief  This function handles OTG_xx_IRQ Handler.
+  * @param  None
+  * @retval None
+  */
+#ifdef USE_USB_OTG_HS
+void OTG_HS_IRQHandler(void)
+#else
+void OTG_FS_IRQHandler(void)
+#endif
+{
+  USBD_OTG_ISR_Handler (&USB_OTG_dev);
+}
+
+#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
+/**
+  * @brief  This function handles EP1_IN Handler.
+  * @param  None
+  * @retval None
+  */
+void OTG_HS_EP1_IN_IRQHandler(void)
+{
+  USBD_OTG_EP1IN_ISR_Handler (&USB_OTG_dev);
+}
+
+/**
+  * @brief  This function handles EP1_OUT Handler.
+  * @param  None
+  * @retval None
+  */
+void OTG_HS_EP1_OUT_IRQHandler(void)
+{
+  USBD_OTG_EP1OUT_ISR_Handler (&USB_OTG_dev);
+}
+#endif
+
+/******************************************************************************/
+/*                 STM32F4xx Peripherals Interrupt Handlers                   */
+/*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
+/*  available peripheral interrupt handler's name please refer to the startup */
+/*  file (startup_stm32f4xx.s).                                               */
+/******************************************************************************/
+
+
+
+/*******************************************************************************
+* Function Name  : DMA1_Channel1_IRQHandler
+* Description    : This function handles DMA1 Channel 1 interrupt request.
+* Input          : None
+* Output         : None
+* Return         : None
+*******************************************************************************/
+//void DMA1_Channel1_IRQHandler(void)
+void DMA1_Stream0_IRQHandler(void)
+{
+
+}
+/*Timer 14 interrupt handler
+*/
+bool isUpdating = false;
+void TIM8_TRG_COM_TIM14_IRQHandler(void)
+{
+  if (TIM_GetITStatus(TIM14, TIM_IT_CC1) != RESET)
+  {
+    TIM_ClearITPendingBit(TIM14, TIM_IT_CC1);
+    if(isUpdating)
+    {
+    	//This shouldn't occur
+    }
+    uint16_t capture = TIM_GetCapture1(TIM14);
+    if(axisData.IsRunning)//Is the axis running? ToDo: Multiple control for running - fix
+    {
+		isUpdating = true;
+		UpdatePosition();
+		isUpdating = false;
+		STM32F4_Discovery_LEDToggle(LED4);
+    }
+    uint16_t capture2 = TIM_GetCapture1(TIM14);
+    TIM_SetCompare1(TIM14, capture2 + TIMERVALUE);
+  }
+}
+
+void TIM3_IRQHandler(void)
+{
+	if(TIM_GetITStatus(TIM3, TIM_IT_CC1) != RESET)
+	{
+		TIM_ClearITPendingBit(TIM3, TIM_IT_CC1);
+		if(PulseGeneratorData[0].set)
+		{
+			//Set pin to reset state
+			if(!PulseGeneratorData[0].polarity)
+				GPIOA->BSRRH |= 1 << 6;
+			else
+				GPIOA->BSRRL |= 1 << 6;
+			STM32F4_Discovery_LEDOff(LED3);
+		}
+		PulseGeneratorData[0].set = false;
+	}
+	else if(TIM_GetITStatus(TIM3, TIM_IT_CC2) != RESET)
+	{
+		TIM_ClearITPendingBit(TIM3, TIM_IT_CC2);
+		if(PulseGeneratorData[1].set)
+		{
+			//Set pin to reset state
+			if(!PulseGeneratorData[1].polarity)
+				GPIOA->BSRRH |= 1 << 7;
+			else
+				GPIOA->BSRRL |= 1 << 7;
+		}
+		PulseGeneratorData[1].set = false;
+	}
+	else if(TIM_GetITStatus(TIM3, TIM_IT_CC3) != RESET)
+	{
+		TIM_ClearITPendingBit(TIM3, TIM_IT_CC3);
+		if(PulseGeneratorData[2].set)
+		{
+			//Set pin to reset state
+			if(!PulseGeneratorData[2].polarity)
+				GPIOB->BSRRH |= 1 << 0;
+			else
+				GPIOB->BSRRL |= 1 << 0;
+		}
+		PulseGeneratorData[2].set = false;
+	}
+	else if(TIM_GetITStatus(TIM3, TIM_IT_CC4) != RESET)
+	{
+		TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);
+	}
+}
+
+void TIM8_BRK_TIM12_IRQHandler(void)
+{
+
+}
+
+
+
+/**
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
+/*void PPP_IRQHandler(void)
+{
+}*/
+
+

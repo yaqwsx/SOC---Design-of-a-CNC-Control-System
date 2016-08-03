@@ -1,0 +1,63 @@
+% V tomto souboru je obstrakt
+% Abstrakt by v práci měl být česky i anglicky
+% Jestliže nemusíte mít anglický abstrakt, je možné jej odstranit
+
+% Nastavit jiné odrážky pro klíčová slova
+\renewcommand{\labelitemi}{--}
+
+\section*{Abstrakt}\label{AbstraktCZ}
+
+\begin{spacing}{1.3}
+	Tato práce popisuje vývoj řídicího systému pro tříosý hobby CNC stroj (frézku). Tento systém se zaměřuje především na dynamiku pohybu stroje tak, aby byl co nejméně mechanicky namáhán. Toho dociluje použitím akceleračních S-křivek, které limituje maximálním použitým zrychlením a ryvem.
+	
+	Uživatelské rozhraní je řešeno skrz klasický počítač, samotnou interpolaci pohybu však obstarává speciální hardwarový interpolátor postavený na STM32F4Discovery kitu. Tento interpolátor komunikuje s~počítačem pomocí USB 2.0 a hlásí se jako vendor-defined zařízení.
+	
+	Řídicí systém příjímá instrukce pro stroj v~G-kódu. Z~G-kódu podporuje většinu nejpoužívanějších funkcí a umí provádět korekci nástroje.
+\end{spacing}
+
+\section*{Klíčová slova}
+
+\begin{itemize}
+	\item CNC stroj
+	\item řidicí systém
+	\item dynamika pohybu
+	\item S-křivky
+	\item ryv
+	\item USB komunikace
+	\item G-kód
+	\item korekce nástroje
+\end{itemize}
+
+\newpage
+
+% Nastavit jako jazyk angličtinu
+\begin{otherlanguage}{english}
+
+\section*{Abstract}\label{AbstraktEN}
+
+\begin{spacing}{1.3}
+	The work deals with the design of a control system for a 3-axis hobby CNC machine (mill). This system focuses on the dynamics of the motion and tries to minimize the dynamic stress on the mechanics of the machine. To achieve this goal it uses acceleration S-curves, which are limited by peak acceleration and jerk.
+	
+	The user interface is realised via a personal computer, but a special hardware unit is used for intepolation of the movement. This unit is built on the STM32F4Discovery kit. It communicates with the PC via USB 2.0. The unit presents itself as a vendor-defined USB device in the host system.
+	
+	The control system takes G-code as an input. The system can interpret all the commonly used G-functions. It is also able to perfom cutter compensation for a mill.
+
+\end{spacing}
+
+\section*{Keywords}
+
+\begin{itemize}
+	\item CNC machine
+	\item control system
+	\item movement dynamics
+	\item S-curves
+	\item jerk (physical quantity)
+	\item USB communication
+	\item G-code
+	\item cutter compensation
+\end{itemize}
+
+\end{otherlanguage}
+
+% Nastavit původní odrážky
+\renewcommand{\labelitemi}{\textbullet}

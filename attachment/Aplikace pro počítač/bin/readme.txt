@@ -1,0 +1,1 @@
+Aplikace pro poèítaè. Aplikace se spouští souborem CNC.exe

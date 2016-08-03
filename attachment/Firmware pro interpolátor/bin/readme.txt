@@ -1,0 +1,1 @@
+Tento adresáø obsahuje binární soubory firmware, které lze pøímo nahrát do STM32F4Discovery kitu. Binárky jsem pøiložil ve dvou nejpoužívanìjších formátech - elf a hex

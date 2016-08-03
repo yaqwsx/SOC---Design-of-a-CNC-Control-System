@@ -1,0 +1,22 @@
+#Wed Feb 29 17:52:53 CET 2012
+eclipse.preferences.version=1
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/CPATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/CPATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/append=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.113672937/appendContributed=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/CPATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/CPATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/append=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.623735162/appendContributed=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.113672937/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.113672937/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.113672937/append=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.113672937/appendContributed=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.623735162/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.623735162/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.623735162/append=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.623735162/appendContributed=true

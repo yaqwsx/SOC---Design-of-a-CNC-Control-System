@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BCDD0BE3-D14D-4C1A-B9DD-680C750F0291}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CNC</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\Honza\Documents\Visual Studio 2010\Projects\CNC\CNC\WinUSB;C:\wxWidgets-2.8.12\include\msvc;C:\wxWidgets-2.8.12\include;C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Honza\Documents\Visual Studio 2010\Projects\CNC\CNC\WinUSB;C:\wxWidgets-2.8.12\lib\vc_dll;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\Honza\Documents\Visual Studio 2010\Projects\CNC\CNC\WinUSB;C:\wxWidgets-2.8.12\include\msvc;C:\wxWidgets-2.8.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Honza\Documents\Visual Studio 2010\Projects\CNC\CNC\WinUSB;C:\wxWidgets-2.8.12\lib\vc_dll;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;WXUSINGDLL;_CRTDBG_MAPALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AxisSettings.cpp" />
+    <ClCompile Include="CommandIDCounter.cpp" />
+    <ClCompile Include="GCodeInterpreter.cpp" />
+    <ClCompile Include="GCodeLine.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="GFunctions.cpp" />
+    <ClCompile Include="global.cpp" />
+    <ClCompile Include="iniFile.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="MyData.cpp" />
+    <ClCompile Include="MyDevice.cpp" />
+    <ClCompile Include="PathOffsets.cpp" />
+    <ClCompile Include="PathPart.cpp" />
+    <ClCompile Include="PathPartCircle.cpp" />
+    <ClCompile Include="PathPartLine.cpp" />
+    <ClCompile Include="PathPartMark.cpp" />
+    <ClCompile Include="PathPartModable.cpp" />
+    <ClCompile Include="PathPartMovable.cpp" />
+    <ClCompile Include="PathPartOffsetCircle.cpp" />
+    <ClCompile Include="PathPartOffsetLine.cpp" />
+    <ClCompile Include="PathPartRapid.cpp" />
+    <ClCompile Include="PathPartUnproc.cpp" />
+    <ClCompile Include="PreviewWindow.cpp" />
+    <ClCompile Include="ProgramControl.cpp" />
+    <ClCompile Include="ProgramRun.cpp" />
+    <ClCompile Include="ReceiveFromDevice.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="StepperSettings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AxisSettings.h" />
+    <ClInclude Include="CodeModificators.h" />
+    <ClInclude Include="CommandCodes.h" />
+    <ClInclude Include="CommandIDCounter.h" />
+    <ClInclude Include="CommandStackCodes.h" />
+    <ClInclude Include="CommunicationEnumerations.h" />
+    <ClInclude Include="ConfigCodes.h" />
+    <ClInclude Include="ErrorCodes.h" />
+    <ClInclude Include="GCodeInterpreter.h" />
+    <ClInclude Include="GCodeLine.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="iniFile.h" />
+    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="MessageCodeToPC.h" />
+    <ClInclude Include="MyApp.h" />
+    <ClInclude Include="MyData.h" />
+    <ClInclude Include="MyDevice.h" />
+    <ClInclude Include="PathOffsets.h" />
+    <ClInclude Include="PathPart.h" />
+    <ClInclude Include="PathPartCircle.h" />
+    <ClInclude Include="PathPartLine.h" />
+    <ClInclude Include="PathPartMark.h" />
+    <ClInclude Include="PathPartModable.h" />
+    <ClInclude Include="PathPartMovable.h" />
+    <ClInclude Include="PathPartOffsetCircle.h" />
+    <ClInclude Include="PathPartOffsetLine.h" />
+    <ClInclude Include="PathPartRapid.h" />
+    <ClInclude Include="PathPartUnproc.h" />
+    <ClInclude Include="PreviewWindow.h" />
+    <ClInclude Include="ProcessedData.h" />
+    <ClInclude Include="ProgramControl.h" />
+    <ClInclude Include="ProgramRun.h" />
+    <ClInclude Include="ReceiveFromDevice.h" />
+    <ClInclude Include="Receivers.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="StateMessage.h" />
+    <ClInclude Include="StepperSettings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico" />
+    <None Include="icon2.ico" />
+    <None Include="pauseProgram.bmp" />
+    <None Include="startProgram.bmp" />
+    <None Include="StopProgram.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

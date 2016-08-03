@@ -1,0 +1,228 @@
+% LaTeX šablona pro seminární a jiné práce, v1.0 (2011-05-29)
+% Tomáš Pikálek <tpikalek@gmail.com>, http://www.tpikalek.net
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% Před použitím doporučuji přečíst roubor README.TXT  %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+
+% Toto je hlavní soubor, který obsahuje některé definice a základní kostru dokumentu
+% Kvůli přehlednosti nedoporučuji do tohoto souboru psát samotný text práce
+% Text práce rozdělte do více souborů (nejlépe ve více složkách), ty sem poté vložte
+
+% Vždy se překládá pouze tento soubor, nikoliv soubory jednotlivé!
+% Např. používáte-li program Texmaker, otevřete tento soubor a dejte Volby → Prohlásit současný dokument za hlavní dokument
+% Poté můžete upravovat jednotlivé soubory a při spuštění překladu se vždy bude překládat tento soubor
+
+
+
+
+% Typ dokumentu - doporučuji neměnit
+% Tisknete-li oboustranně, první řádek zakomentujte nebo smažte a odkomentujte druhý řádek
+\documentclass [a4paper,11pt,oneside,notitlepage,openright]{report} % Typ dokumentu - pokud tisknete jednostranně
+%\documentclass [a4paper,11pt,twoside,notitlepage,openright]{report} % Typ dokumentu - pokud tisknete oboustranně
+
+
+% Načte styly dokumentu
+% Jestliže chcete ovlivnit vzhled dokumentu, upravte právě tento soubor
+\usepackage{00-Styly/Styly}
+%\usepackage{00-Styly/kod}
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+	\def \Jmeno{Středoškolská odborná činnost} % Typ práce
+	\def \Kategorie{Obor SOČ: 18 informatika} % Kategorie práce
+	\def \NazevCJ{Návrh řídicího systému CNC stroje se zaměřením na dynamiku pohybu} % Návrh malé větrné turbíny
+	\def \NazevAJ{Design of a control system for a CNC machine with a~focus on the dynamics of movement} % Design of small wind turbine
+	\def \Autor {Jan Mrázek} % Autor
+	\def \Datum {Hulín 2013} % Místo a datum
+	\def \Podepsano {28. března 2013} % Datum podpisu prohlášení
+	\def \Skola {Gymnázium Kroměříž\\\small{Masarykovo náměstí 496, 767 01 Kroměříž}} % Škola
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+
+% Nastavit autora a titulek pro PDF výstup
+\author{\Autor}
+\title{\Jmeno - \NazevCJ}
+
+
+\begin{document}
+
+% Titulní stránka
+% Obsahuje školu, typ a název práce, místo, datum a autora
+% Pokud Vaše škola požaduje specifickou titulní stranu, je třeba vyměnit
+\input{00-Hlavicka/Titulka.tex}
+\cleardoublepage
+
+% Nastavit prázdné stránky a číslování na římské číslice
+% Toto se použije pro strany, které jsou před samotnou prací
+\pagestyle{plain}
+\pagenumbering{Roman}
+
+% Prohlášení
+% Následující soubor upravte, pokud nevyhovuje požadavkům
+\input{00-Hlavicka/Prohlaseni.tex}
+\newpage
+
+% Poděkování
+% Upravte následující soubor
+\input{00-Hlavicka/Podekovani.tex}
+\cleardoublepage
+
+% Abstrakt
+% Upravte následující soubor
+\input{00-Hlavicka/Abstrakt.tex}
+\cleardoublepage
+
+% Originální zadání v PDF
+% Jestlite máte originál zadání a máte jej v práci uvádět, zde jej můžete vložit jako PDF
+% V opačném případě následující řádky smažte nebo zakomentujte
+%\includepdf{00-Hlavicka/Zadani.pdf}
+%\cleardoublepage
+
+% Posudek v PDF
+% Jestliže máte na práci vypracovaný posudek, zde jej můžete vložit jako PDF
+% V opačném případě následující řádky smažte nebo zakomentujte
+%\includepdf{00-Hlavicka/Posudek.pdf}
+\cleardoublepage
+
+% Obsah
+\tableofcontents
+\cleardoublepage
+
+% Seznam obrázků
+%\addcontentsline{toc}{chapter}{Seznam obrázků}
+%\listoffigures
+\cleardoublepage
+
+% Seznam tabulek
+%\addcontentsline{toc}{chapter}{Seznam tabulek}
+%\listoftables
+\cleardoublepage
+
+% Nastavit normální číslování stránek
+% Toto se použije na samotný text práce
+\pagenumbering{arabic}
+%\pagestyle{headings}
+%\pagestyle{headings}
+
+
+
+
+% Načíst soubory
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Zde se načítají soubory s vlastním textem práce
+% Doporučuji se držet výchozího schématu
+% Je vhodné kvůli přehlednosti celou práci rozdělit do několika složek a souborů, každý zde pak vložit zvlášť
+% U krátkých prací doporučuji nepoužívat části, ale dělit jen na kapitoly
+		\input{Uvod/Uvod.tex}
+	\part{Fyzikální model}\label{part:model}
+		\input{fyzikalni_model/model.tex}
+	\part{Realizace}\label{part:realizace}
+		\input{realizace/realizace2.tex}
+	\part{Závěr}\label{part:zaver}
+		\input{zaver.tex}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+
+% Bibliografie
+\nocite{*} % Uvést všechny záznamy, i necitované
+\bibliography{00-Reference/Reference}
+\addcontentsline{toc}{chapter}{Literatura}
+\cleardoublepage
+
+% Nastaví číslování stránek pro přílohy
+\pagenumbering{Roman}
+
+
+
+% Přílohy
+\part{Přílohy}
+\begin{appendix}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Zde se vkládají přílohy
+% Můžete vkládat soubory TeX či přímo PDF soubory
+% Samotný text příloh doporučuji kvůli přehlednosti mít ve zvlášních souborech
+%	\input{Prilohy/01-SeznamSoucastek.tex}
+\chapter{Dotaz na řešení akcelerace u~interpolačních jednotek Gravos}\label{kap:gravos}
+\section{Můj dotaz}
+Dobrý den,
+
+píši práci, která se tématicky týká řídicích systému pro hobby CNC stroje.
+Součástí práce je i stručný přehled dostupných řídicích systému. Vaše
+řídicí jednotky se mi líbí a rád bych je v~práci zmínil. Nikde jsem však na
+Vašich stránkách nenašel některé informace. Mohl byste mi je prosím doplnit
+(pokud to samozřejmě budete pokládat za odhalení určitého know-how,
+odpovídat nemusíte).
+\begin{itemize}
+\item jaké máte stanoveny limity pro dynamiku pohybu stroje? Předpokládám, že
+omezujete maximální zrychlení. Omezujete také maximální ryv? 
+\item jaký druh akceleračních ramp vaše jednotky používají? Lineární, přibližně
+navolené S-křivky, či S-křivky založené na daném matematicko-fyzikálním
+modelu?
+\item ačkoliv řídicí program podporuje kruhovou interpolaci, v~dokumentaci k~řídicí jednotce popisuje pouze vektory. Mám to chápat tak, že řídicí
+systému rozloží kruhový oblouk do spousty malých úseček, které řídicí
+jenotka následně projede? Jak v tomto případě je ošetřeno celkové
+zrychlení?
+\end{itemize}
+
+\hfill Předem děkuji za odpověď
+
+\hfill Jan Mrázek
+
+\section{Vyjádření společnosti Gravos}
+Dobrý den,
+
+pokusím se odpovědět na otázky ohledně našeho cnc řízení, pokud něco nebude jasné nebo budete mít další dotazy, ptejte se dál na helpdesk@gravos.cz.
+
+Z hlediska samotné jednotky dynamika stroje se do jednotky zadává jako akcelerace výsledného pohybu, brzdná rychlost (rychlost na kterou se přibrzdí na konci vektoru a délka tzv krátkého vektoru, vektory kratší než nastavená délka krátkého vektoru jednotka akceleruje pouze na brzdnou rychlost.
+
+Pak se nastavuje rychlost výsledného vektoru a limity rychlosti jednotlivých os. Změna rychlosti za pohybu se provádí procentuálně. Pokud by přišel jednotce vektor kde by jedna osa jela rychleji než nastavený limit nebo přišel požadavek na procentuální změnu rychlosti, sníží se rychlost tak aby rychlostní limit nebyl překročen. Pro rychlosti se ještě nastavuje jestli má jednotka provádět rychlostní korekce (zadaná rychlost je rychlost výsledného pohybu) nebo jestli se rychlosti nechají na nadřízeném SW ( zadaná rychlost je rychlost osy která má ujet nejvíce kroků). Druhá možnost se používá v sw Armote pro kontinuální 4 osé obrábění, kde je nutné rychlost upravovat podle směrů os a vzdálenosti od osy rotace, tak aby zadaná rychlost v g-kódu F odpovídala rychlosti špičky nástroje vůči materiálu.
+
+Z hlediska sw Armote to jsou max rychlosti jednotlivých os, akcelerace, max změna rychlosti jednotlivých os, rychlost oblouku o poloměru 1~mm a mezní úhel do kterého se považuje další vektor ještě za navazující. Má-li stroj pak vykonat oblouk, dobrzdí se na začátek oblouku na rychlost pro R1$\cdot$poloměr oblouku, pokud by rychlost byla vyšší než povolená změna rychlosti jednotlivých os, omezí se podle max změny rychlosti jednotlivých os.
+
+Rampy se používají lineární mm$\cdot$s$^{-2}$, jednotka GVE94 (zatím není v nabídce) má implementovány S křivky ve formě dalšího typu vektoru pro který se akcelerace nastavuje zvlášť v~mm$\cdot$s$^{-2}$ pro lineární část a v~mm$\cdot$s$^{-3}$ pro začátek a konec akcelerace (omezení ryvu), tento typ vektoru má omezení, že během jeho chodu nelze měnit rychlost. Proto je v Armote použit jen pro rychloposuvy. Všechny jednotky přijímají vektory typu L pro nenavazující vektory, typu C pro navazující vektory (počáteční a koncová rychlost může být různá) a GVE94 má ještě typ vektoru LJ, jako typ L ale s akcelerační S křivkou. Jaký typ vektoru se jednotce pošle určuje sw Armote podle nastavených parametrů.
+
+Oblouky  jsou rozloženy na úsečky a odesílány do jednotky jako vektory typu C, jednotka má pro ně buffer (GVE64 může mít v bufferu 420 těchto vektorů) a každý může mít nastavenou jinou brzdnou rychlost. Armote tedy rozloží oblouk na úsečky a pokud by někde mělo dojít ke změně rychlosti (např se změnou poloměru) pošle jednotce k vektoru i jeho brzdnou rychlost. Jednotka pak vektory provádí postupně a když se uvolní místo v bufferu, Armote pošle další vektory. Tímto způsobem může stroj projet libovolnou prostorovou křivku plynule a je jedno jestli přijde v g kódu jako oblouk G2/G3 nebo už na úsečky rozložené z CAMu jako G1 což je zásadní pro rychlé 3D obrábění kde jsou prakticky veškeré dráhy z CAMu jako úsečky. Jediné omezení je v~komunikační rychlosti (kromě GVE84 umí všechny jednotky až 921 000~Bd), tedy musí se stíhat plnit buffer, jednotka akceleruje maximálně na takovou rychlost, aby bylo možné na konci všech dosud přijatých vektorů v bufferu zabrzdit po nastavené rampě do nulové rychlosti. Rozklad na úsečky se provádí podle nastavené odchylky od sečny v Armote, defaultně nastaveno na $0,001$~mm.
+
+\hfill pozdravem
+
+\hfill Jan Vostárek -- GRAVOS
+
+
+
+(Poznámka: Vyjádření bylo mírně typograficky upraveno)
+
+
+\chapter{Obsah přiloženého CD}
+Přiložené CD obsahuje následující adresářovou strukturu:
+\begin{itemize}
+	\item {\tt Ukázky}
+	
+	Tento adresář obsahuje videa ukazující funkci plotteru. Jednotlivá videa obsahují popis použitých nastavení atd.
+	\item {\tt Zdrojové soubory}
+	
+	Tento adresář obsahuje veškeré zdrojové soubory celého interpolátoru. Pro přehlednost jsou rozděleny do složek:
+	\begin{itemize}
+		\item {\tt Aplikace pro počítač}
+		
+		Adresář {\tt src} obsahuje celý projekt aplikace pro počítač včetně všech nezbytných knihoven. Vytvořený projekt pochází z~IDE Microsoft Visual C++ 2010. Uvnitř projektu jsou uloženy i zdrojové soubory a utility nutné pro vytvoření balíčku ovladačů WinUSB.
+		
+		Adresář {\tt bin} obsahuje již sestavenou aplikaci.
+	
+		
+		\item {\tt Firmware pro interpolátor}
+		
+		Adresář {\tt src} obsahuje projekt firmware pro interlátor včetně všech nezbytných knihoven. Projekt pochází z~IDE Atollic TRUEStudio Lite verze 2.2.0.
+		
+		Adresář {\tt bin} obsahuje již sestavený firmware ve formátu {\tt hex}.
+	\end{itemize}
+\end{itemize}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\end{appendix}
+
+
+
+\end{document}
